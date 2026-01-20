@@ -25,4 +25,72 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+/**
+ * Portfolio table - stores user portfolios
+ */
+export const portfolios = mysqlTable("portfolios", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Portfolio = typeof portfolios.$inferSelect;
+export type InsertPortfolio = typeof portfolios.$inferInsert;
+
+/**
+ * Holdings table - stores individual investments in a portfolio
+ */
+export const holdings = mysqlTable("holdings", {
+  id: int("id").autoincrement().primaryKey(),
+  portfolioId: int("portfolioId").notNull().references(() => portfolios.id, { onDelete: "cascade" }),
+  symbol: varchar("symbol", { length: 50 }).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  assetType: mysqlEnum("assetType", ["stock", "fund", "crypto"]).notNull(),
+  quantity: varchar("quantity", { length: 100 }).notNull(),
+  purchasePrice: varchar("purchasePrice", { length: 100 }).notNull(),
+  purchaseDate: timestamp("purchaseDate").notNull(),
+  currentPrice: varchar("currentPrice", { length: 100 }),
+  lastUpdated: timestamp("lastUpdated").defaultNow(),
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Holding = typeof holdings.$inferSelect;
+export type InsertHolding = typeof holdings.$inferInsert;
+
+/**
+ * Price history table - stores historical price data for analysis
+ */
+export const priceHistory = mysqlTable("priceHistory", {
+  id: int("id").autoincrement().primaryKey(),
+  holdingId: int("holdingId").notNull().references(() => holdings.id, { onDelete: "cascade" }),
+  symbol: varchar("symbol", { length: 50 }).notNull(),
+  price: varchar("price", { length: 100 }).notNull(),
+  date: timestamp("date").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type PriceHistory = typeof priceHistory.$inferSelect;
+export type InsertPriceHistory = typeof priceHistory.$inferInsert;
+
+/**
+ * Portfolio metrics cache - stores calculated metrics for performance
+ */
+export const portfolioMetrics = mysqlTable("portfolioMetrics", {
+  id: int("id").autoincrement().primaryKey(),
+  portfolioId: int("portfolioId").notNull().references(() => portfolios.id, { onDelete: "cascade" }),
+  totalValue: varchar("totalValue", { length: 100 }).notNull(),
+  totalCost: varchar("totalCost", { length: 100 }).notNull(),
+  totalReturn: varchar("totalReturn", { length: 100 }).notNull(),
+  returnPercentage: varchar("returnPercentage", { length: 100 }).notNull(),
+  volatility: varchar("volatility", { length: 100 }),
+  date: timestamp("date").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type PortfolioMetrics = typeof portfolioMetrics.$inferSelect;
+export type InsertPortfolioMetrics = typeof portfolioMetrics.$inferInsert;
