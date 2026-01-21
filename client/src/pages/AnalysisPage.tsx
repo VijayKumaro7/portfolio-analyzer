@@ -3,11 +3,8 @@ import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useLocation } from "wouter";
+import EnhancedPerformanceChart from "@/components/EnhancedPerformanceChart";
 import {
-  LineChart,
-  Line,
-  AreaChart,
-  Area,
   PieChart,
   Pie,
   Cell,
@@ -20,7 +17,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { Loader2, Download, Zap, TrendingUp } from "lucide-react";
+import { Loader2, Download, Zap } from "lucide-react";
 import { toast } from "sonner";
 
 interface AnalysisPageProps {
@@ -96,16 +93,6 @@ export default function AnalysisPage({ portfolioId }: AnalysisPageProps) {
     })
   );
 
-  // Prepare performance data (mock)
-  const performanceData = [
-    { month: "Jan", value: 10000 },
-    { month: "Feb", value: 10500 },
-    { month: "Mar", value: 10200 },
-    { month: "Apr", value: 11000 },
-    { month: "May", value: 10800 },
-    { month: "Jun", value: 11500 },
-  ];
-
   // Prepare risk-return scatter data
   const riskReturnData = holdings.map((h, i) => ({
     name: h.symbol,
@@ -174,6 +161,12 @@ export default function AnalysisPage({ portfolioId }: AnalysisPageProps) {
         </Card>
       </div>
 
+      {/* Enhanced Performance Chart with Technical Indicators */}
+      <EnhancedPerformanceChart
+        portfolioId={portfolioId}
+        title="Portfolio Performance with Technical Indicators"
+      />
+
       {/* Charts Grid */}
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Asset Allocation Pie Chart */}
@@ -202,62 +195,34 @@ export default function AnalysisPage({ portfolioId }: AnalysisPageProps) {
           </ResponsiveContainer>
         </Card>
 
-        {/* Performance Area Chart */}
+        {/* Risk-Return Scatter Plot */}
         <Card className="card-elegant p-6">
           <h3 className="text-lg font-semibold text-foreground mb-4">
-            Portfolio Performance
+            Risk vs Return Analysis
           </h3>
           <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={performanceData}>
-              <defs>
-                <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="oklch(0.623 0.214 259.815)" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="oklch(0.623 0.214 259.815)" stopOpacity={0} />
-                </linearGradient>
-              </defs>
+            <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.92 0.004 286.32)" />
-              <XAxis dataKey="month" stroke="oklch(0.552 0.016 285.938)" />
-              <YAxis stroke="oklch(0.552 0.016 285.938)" />
-              <Tooltip />
-              <Area
-                type="monotone"
-                dataKey="value"
-                stroke="oklch(0.623 0.214 259.815)"
-                fillOpacity={1}
-                fill="url(#colorValue)"
+              <XAxis
+                dataKey="risk"
+                name="Risk (%)"
+                stroke="oklch(0.552 0.016 285.938)"
               />
-            </AreaChart>
+              <YAxis
+                dataKey="return"
+                name="Return (%)"
+                stroke="oklch(0.552 0.016 285.938)"
+              />
+              <Tooltip cursor={{ strokeDasharray: "3 3" }} />
+              <Scatter
+                name="Assets"
+                data={riskReturnData}
+                fill="oklch(0.623 0.214 259.815)"
+              />
+            </ScatterChart>
           </ResponsiveContainer>
         </Card>
       </div>
-
-      {/* Risk-Return Scatter Plot */}
-      <Card className="card-elegant p-6">
-        <h3 className="text-lg font-semibold text-foreground mb-4">
-          Risk vs Return Analysis
-        </h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.92 0.004 286.32)" />
-            <XAxis
-              dataKey="risk"
-              name="Risk (%)"
-              stroke="oklch(0.552 0.016 285.938)"
-            />
-            <YAxis
-              dataKey="return"
-              name="Return (%)"
-              stroke="oklch(0.552 0.016 285.938)"
-            />
-            <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-            <Scatter
-              name="Assets"
-              data={riskReturnData}
-              fill="oklch(0.623 0.214 259.815)"
-            />
-          </ScatterChart>
-        </ResponsiveContainer>
-      </Card>
 
       {/* Correlation Matrix */}
       {correlations && (
@@ -307,7 +272,7 @@ export default function AnalysisPage({ portfolioId }: AnalysisPageProps) {
                 AI-Powered Recommendations
               </h3>
               <div className="text-foreground whitespace-pre-wrap text-sm leading-relaxed">
-                {typeof recommendationsMutation.data.recommendations === 'string'
+                {typeof recommendationsMutation.data.recommendations === "string"
                   ? recommendationsMutation.data.recommendations
                   : JSON.stringify(recommendationsMutation.data.recommendations)}
               </div>
