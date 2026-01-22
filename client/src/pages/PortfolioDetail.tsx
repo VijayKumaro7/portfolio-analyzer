@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useLocation } from "wouter";
 import { Plus, Loader2, Trash2, Edit2, TrendingUp, DollarSign } from "lucide-react";
 import { toast } from "sonner";
+import MarketPriceDisplay from "@/components/MarketPriceDisplay";
 
 interface PortfolioDetailProps {
   portfolioId: number;
@@ -16,6 +17,7 @@ interface PortfolioDetailProps {
 export default function PortfolioDetail({ portfolioId }: PortfolioDetailProps) {
   const [, setLocation] = useLocation();
   const [isAddHoldingOpen, setIsAddHoldingOpen] = useState(false);
+  const [liveMarketPrices, setLiveMarketPrices] = useState<Record<string, number>>({});
   const [formData, setFormData] = useState({
     symbol: "",
     name: "",
@@ -80,6 +82,16 @@ export default function PortfolioDetail({ portfolioId }: PortfolioDetailProps) {
         toast.error("Failed to delete holding");
       }
     }
+  };
+
+  const handlePricesUpdate = (prices: any[]) => {
+    const priceMap: Record<string, number> = {};
+    prices.forEach((p) => {
+      if (p?.symbol) {
+        priceMap[p.symbol] = p.price;
+      }
+    });
+    setLiveMarketPrices(priceMap);
   };
 
   if (isLoading) {
@@ -156,6 +168,18 @@ export default function PortfolioDetail({ portfolioId }: PortfolioDetailProps) {
         </Card>
       </div>
 
+      {/* Live Market Prices */}
+      {holdings.length > 0 && (
+        <MarketPriceDisplay
+          holdings={holdings.map((h) => ({
+            symbol: h.symbol,
+            type: h.assetType as "stock" | "crypto" | "fund",
+          }))}
+          onPricesUpdate={handlePricesUpdate}
+          refetchInterval={60000}
+        />
+      )}
+
       {/* Holdings Table */}
       <Card className="card-elegant">
         <div className="overflow-x-auto">
@@ -177,6 +201,9 @@ export default function PortfolioDetail({ portfolioId }: PortfolioDetailProps) {
                 <th className="px-6 py-4 text-right text-sm font-semibold text-foreground">
                   Purchase Price
                 </th>
+                <th className="px-6 py-4 text-right text-sm font-semibold text-foreground">
+                  Current Price
+                </th>
                 <th className="px-6 py-4 text-center text-sm font-semibold text-foreground">
                   Actions
                 </th>
@@ -184,51 +211,77 @@ export default function PortfolioDetail({ portfolioId }: PortfolioDetailProps) {
             </thead>
             <tbody>
               {holdings.length > 0 ? (
-                holdings.map((holding) => (
-                  <tr
-                    key={holding.id}
-                    className="border-b border-border hover:bg-muted/50 transition-colors"
-                  >
-                    <td className="px-6 py-4 font-medium text-foreground">
-                      {holding.symbol}
-                    </td>
-                    <td className="px-6 py-4 text-foreground">{holding.name}</td>
-                    <td className="px-6 py-4">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                        {holding.assetType}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-right text-foreground">
-                      {holding.quantity}
-                    </td>
-                    <td className="px-6 py-4 text-right text-foreground">
-                      ${holding.purchasePrice}
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center justify-center gap-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setLocation(`/asset/${holding.id}`)}
-                          className="text-primary hover:text-primary/80"
-                        >
-                          <Edit2 className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDeleteHolding(holding.id)}
-                          className="text-destructive hover:text-destructive/80"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
+                holdings.map((holding) => {
+                  const currentPrice = liveMarketPrices[holding.symbol.toUpperCase()] || null;
+                  const gainLoss = currentPrice
+                    ? ((currentPrice - parseFloat(holding.purchasePrice)) / parseFloat(holding.purchasePrice)) * 100
+                    : null;
+
+                  return (
+                    <tr
+                      key={holding.id}
+                      className="border-b border-border hover:bg-muted/50 transition-colors"
+                    >
+                      <td className="px-6 py-4 font-medium text-foreground">
+                        {holding.symbol}
+                      </td>
+                      <td className="px-6 py-4 text-foreground">{holding.name}</td>
+                      <td className="px-6 py-4">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                          {holding.assetType}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right text-foreground">
+                        {holding.quantity}
+                      </td>
+                      <td className="px-6 py-4 text-right text-foreground">
+                        ${holding.purchasePrice}
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        {currentPrice ? (
+                          <div className="text-foreground">
+                            <p className="font-medium">${currentPrice.toFixed(2)}</p>
+                            {gainLoss !== null && (
+                              <p
+                                className={`text-xs ${
+                                  gainLoss >= 0 ? "text-accent" : "text-destructive"
+                                }`}
+                              >
+                                {gainLoss >= 0 ? "+" : ""}
+                                {gainLoss.toFixed(2)}%
+                              </p>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="text-muted-foreground text-sm">Loading...</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center justify-center gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setLocation(`/asset/${holding.id}`)}
+                            className="text-primary hover:text-primary/80"
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDeleteHolding(holding.id)}
+                            className="text-destructive hover:text-destructive/80"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
               ) : (
                 <tr>
-                  <td colSpan={6} className="px-6 py-8 text-center text-muted-foreground">
+                  <td colSpan={7} className="px-6 py-8 text-center text-muted-foreground">
                     No holdings yet. Add your first investment to get started.
                   </td>
                 </tr>
