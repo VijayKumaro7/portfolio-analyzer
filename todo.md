@@ -81,3 +81,12 @@
 - [x] Create MarketPriceDisplay component
 - [x] Integrate live prices into PortfolioDetail page
 - [x] Display current price and gain/loss percentage
+
+
+## Phase 10: Demo Data Setup
+- [x] Create seed script for demo data
+- [x] Generate demo user accounts (3 users)
+- [x] Create sample portfolios (5 portfolios)
+- [x] Add sample holdings with realistic data (16 holdings)
+- [x] Populate with various asset types (stocks, funds, crypto)
+- [x] Add price history for charts (496 price records)
