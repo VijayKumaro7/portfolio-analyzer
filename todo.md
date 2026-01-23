@@ -90,3 +90,15 @@
 - [x] Add sample holdings with realistic data (16 holdings)
 - [x] Populate with various asset types (stocks, funds, crypto)
 - [x] Add price history for charts (496 price records)
+
+
+## Phase 11: Public Demo Mode
+- [x] Create demo mode router with public procedures
+- [x] Add demo portfolio retrieval endpoints
+- [x] Create demo mode UI component
+- [x] Add demo mode page with portfolio selector
+- [x] Integrate demo mode into home page
+- [x] Add demo mode toggle/indicator
+- [x] Create comprehensive unit tests (10 tests, all passing)
+- [x] Display portfolio statistics and holdings
+- [x] Add CTA to create personal portfolio

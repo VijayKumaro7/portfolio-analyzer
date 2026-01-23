@@ -9,11 +9,13 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import PortfolioDetail from "./pages/PortfolioDetail";
 import AssetDetail from "./pages/AssetDetail";
+import DemoMode from "./pages/DemoMode";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/demo"} component={DemoMode} />
       <Route path={"/dashboard"}>
         {() => (
           <DashboardLayout>
@@ -36,6 +38,7 @@ function Router() {
         )}
       </Route>
       <Route path={"/404"} component={NotFound} />
+      {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
   );

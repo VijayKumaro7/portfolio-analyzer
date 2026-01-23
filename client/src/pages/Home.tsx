@@ -19,7 +19,7 @@ export default function Home() {
             </div>
             <h1 className="text-xl font-bold text-foreground">Portfolio Analyzer</h1>
           </div>
-          <div>
+          <div className="flex gap-3">
             {isAuthenticated ? (
               <Button
                 onClick={() => setLocation("/dashboard")}
@@ -28,12 +28,21 @@ export default function Home() {
                 Go to Dashboard
               </Button>
             ) : (
-              <Button
-                onClick={() => (window.location.href = getLoginUrl())}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground"
-              >
-                Sign In
-              </Button>
+              <>
+                <Button
+                  onClick={() => (window.location.href = getLoginUrl())}
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                >
+                  Sign In
+                </Button>
+                <Button
+                  onClick={() => setLocation("/demo")}
+                  variant="outline"
+                  className="border-border hover:bg-muted"
+                >
+                  Try Demo
+                </Button>
+              </>
             )}
           </div>
         </div>
@@ -67,11 +76,12 @@ export default function Home() {
                   Get Started
                 </Button>
                 <Button
+                  onClick={() => setLocation("/demo")}
                   variant="outline"
                   size="lg"
                   className="border-border hover:bg-muted"
                 >
-                  Learn More
+                  Explore Demo
                 </Button>
               </>
             )}
@@ -142,13 +152,23 @@ export default function Home() {
             Join thousands of investors using Portfolio Analyzer to make smarter investment decisions
           </p>
           {!isAuthenticated && (
-            <Button
-              onClick={() => (window.location.href = getLoginUrl())}
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground"
-            >
-              Start Analyzing Now
-            </Button>
+            <div className="flex gap-3 justify-center">
+              <Button
+                onClick={() => (window.location.href = getLoginUrl())}
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground"
+              >
+                Start Analyzing Now
+              </Button>
+              <Button
+                onClick={() => setLocation("/demo")}
+                variant="outline"
+                size="lg"
+                className="border-border hover:bg-muted"
+              >
+                View Demo First
+              </Button>
+            </div>
           )}
         </div>
       </section>
