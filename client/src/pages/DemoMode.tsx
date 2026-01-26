@@ -43,10 +43,10 @@ export default function DemoMode() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 fade-in">
       {/* Header */}
-      <div>
-        <h1 className="text-4xl font-bold text-foreground">Demo Portfolio Explorer</h1>
+      <div className="fade-in">
+        <h1 className="text-4xl font-bold text-foreground gradient-text">Demo Portfolio Explorer</h1>
         <p className="text-muted-foreground mt-2">
           Explore sample portfolios without authentication. Select a portfolio to view detailed analytics.
         </p>
@@ -54,8 +54,8 @@ export default function DemoMode() {
 
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Portfolio List */}
-        <div className="lg:col-span-1">
-          <Card className="card-elegant p-6">
+        <div className="lg:col-span-1 fade-in">
+          <Card className="card-elegant p-6 hover-lift">
             <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
               <Users className="w-5 h-5" />
               Demo Accounts
@@ -93,11 +93,11 @@ export default function DemoMode() {
         </div>
 
         {/* Portfolio Details */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-6 fade-in">
           {selectedPortfolioId && portfolioDetails ? (
             <>
               {/* Portfolio Header */}
-              <Card className="card-elegant p-6">
+              <Card className="card-elegant p-6 hover-lift">
                 <h2 className="text-2xl font-bold text-foreground mb-2">
                   {portfolioDetails.portfolio.name}
                 </h2>
@@ -111,7 +111,7 @@ export default function DemoMode() {
 
               {/* Portfolio Statistics */}
               {portfolioStats && (
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2 gap-4 fade-in">
                   <Card className="metric-card">
                     <div className="flex items-center justify-between">
                       <div>
@@ -177,9 +177,9 @@ export default function DemoMode() {
               )}
 
               {/* Holdings Table */}
-              <Card className="card-elegant">
+              <Card className="card-elegant hover-lift">
                 <div className="p-6 border-b border-border">
-                  <h3 className="text-lg font-semibold text-foreground">Holdings</h3>
+                  <h3 className="text-lg font-semibold text-foreground gradient-text">Holdings</h3>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full">

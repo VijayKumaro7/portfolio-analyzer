@@ -9,9 +9,16 @@ export default function Home() {
   const [, setLocation] = useLocation();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-card to-muted">
+    <div className="min-h-screen bg-gradient-to-br from-background via-card to-muted animated-gradient relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl float-slower"></div>
+        <div className="absolute bottom-20 left-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl float-slow"></div>
+        <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-primary/3 rounded-full blur-3xl float-slower" style={{animationDelay: '2s'}}></div>
+      </div>
+      
       {/* Navigation */}
-      <nav className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+      <nav className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50 glass-effect">
         <div className="container flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
@@ -49,7 +56,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="container py-20 md:py-32">
+      <section className="container py-20 md:py-32 relative z-10 fade-in">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
             Elegant Portfolio Management
@@ -90,7 +97,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="container py-20">
+      <section className="container py-20 relative z-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="card-elegant p-6">
             <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
@@ -143,7 +150,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="container py-20">
+      <section className="container py-20 relative z-10">
         <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl border border-primary/20 p-12 text-center">
           <h3 className="text-3xl font-bold text-foreground mb-4">
             Ready to optimize your portfolio?
@@ -174,7 +181,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-card/50 backdrop-blur-sm py-8 mt-20">
+      <footer className="border-t border-border bg-card/50 backdrop-blur-sm py-8 mt-20 relative z-10 glass-effect">
         <div className="container text-center text-muted-foreground text-sm">
           <p>&copy; 2026 Portfolio Analyzer. All rights reserved.</p>
         </div>
