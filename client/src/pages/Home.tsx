@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 import { getLoginUrl } from "@/const";
 import { BarChart3, TrendingUp, PieChart, Zap } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
@@ -26,7 +27,8 @@ export default function Home() {
             </div>
             <h1 className="text-xl font-bold text-foreground">Portfolio Analyzer</h1>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 items-center">
+            <ThemeToggle />
             {isAuthenticated ? (
               <Button
                 onClick={() => setLocation("/dashboard")}
