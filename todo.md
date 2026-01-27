@@ -129,3 +129,17 @@
 - [x] Add theme toggle to navigation (Home page)
 - [x] Add theme toggle to dashboard (Sidebar)
 - [x] Test theme switching across all pages (all 43 tests passing)
+
+
+## Phase 14: Chart & Metric Entrance Animations
+- [x] Create chart animation wrapper component (AnimatedChart)
+- [x] Add staggered metric card animations (AnimatedMetricCard)
+- [x] Implement chart scale-in animations
+- [x] Add slide-up animations for metric cards
+- [x] Create bounce-in animations for emphasis
+- [x] Implement stagger delays (0.1s to 0.6s)
+- [x] Add animation timing controls with delay prop
+- [x] Test animations across all chart pages (all 43 tests passing)
+- [x] Integrate animations into AnalysisPage
+- [x] Add gradient text effects to chart titles
+- [x] Add hover-lift effects to chart cards
