@@ -10,12 +10,14 @@ import Dashboard from "./pages/Dashboard";
 import PortfolioDetail from "./pages/PortfolioDetail";
 import AssetDetail from "./pages/AssetDetail";
 import DemoMode from "./pages/DemoMode";
+import Pricing from "./pages/Pricing";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/demo"} component={DemoMode} />
+      <Route path={"/pricing"} component={Pricing} />
       <Route path={"/dashboard"}>
         {() => (
           <DashboardLayout>

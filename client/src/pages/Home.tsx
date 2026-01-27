@@ -23,6 +23,10 @@ export default function Home() {
     setLocation("/demo");
   };
 
+  const handlePricing = () => {
+    setLocation("/pricing");
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -61,6 +65,13 @@ export default function Home() {
               className="text-foreground hover:text-primary"
             >
               Try Demo
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={handlePricing}
+              className="text-foreground hover:text-primary"
+            >
+              Pricing
             </Button>
             <ThemeToggle />
             {isAuthenticated ? (
