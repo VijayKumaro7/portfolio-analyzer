@@ -5,6 +5,9 @@ import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-or
  * Extend this file with additional tables as your product grows.
  * Columns use camelCase to match both database fields and generated types.
  */
+/**
+ * Add stripe_customer_id to users table for Stripe integration
+ */
 export const users = mysqlTable("users", {
   /**
    * Surrogate primary key. Auto-incremented numeric value managed by the database.
@@ -20,10 +23,29 @@ export const users = mysqlTable("users", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
+  stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
 });
 
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
+
+/**
+ * Payment intent table - tracks payment intents for audit purposes
+ */
+export const paymentIntents = mysqlTable("paymentIntents", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }).notNull().unique(),
+  amount: varchar("amount", { length: 100 }).notNull(),
+  currency: varchar("currency", { length: 10 }).default("usd").notNull(),
+  status: varchar("status", { length: 50 }).notNull(),
+  tier: mysqlEnum("tier", ["pro", "premium"]).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PaymentIntent = typeof paymentIntents.$inferSelect;
+export type InsertPaymentIntent = typeof paymentIntents.$inferInsert;
 
 /**
  * Portfolio table - stores user portfolios
@@ -94,3 +116,23 @@ export const portfolioMetrics = mysqlTable("portfolioMetrics", {
 
 export type PortfolioMetrics = typeof portfolioMetrics.$inferSelect;
 export type InsertPortfolioMetrics = typeof portfolioMetrics.$inferInsert;
+
+/**
+ * Subscription table - stores user subscription information
+ */
+export const subscriptions = mysqlTable("subscriptions", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  stripeCustomerId: varchar("stripeCustomerId", { length: 255 }).notNull().unique(),
+  stripeSubscriptionId: varchar("stripeSubscriptionId", { length: 255 }),
+  tier: mysqlEnum("tier", ["free", "pro", "premium"]).default("free").notNull(),
+  status: mysqlEnum("status", ["active", "canceled", "past_due", "unpaid", "trialing"]).default("active").notNull(),
+  currentPeriodStart: timestamp("currentPeriodStart"),
+  currentPeriodEnd: timestamp("currentPeriodEnd"),
+  canceledAt: timestamp("canceledAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Subscription = typeof subscriptions.$inferSelect;
+export type InsertSubscription = typeof subscriptions.$inferInsert;

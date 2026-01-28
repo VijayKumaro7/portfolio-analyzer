@@ -11,6 +11,7 @@ import PortfolioDetail from "./pages/PortfolioDetail";
 import AssetDetail from "./pages/AssetDetail";
 import DemoMode from "./pages/DemoMode";
 import Pricing from "./pages/Pricing";
+import SubscriptionPage from "./pages/SubscriptionPage";
 
 function Router() {
   return (
@@ -18,7 +19,8 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/demo"} component={DemoMode} />
       <Route path={"/pricing"} component={Pricing} />
-      <Route path={"/dashboard"}>
+      <Route path={"/subscription"} component={SubscriptionPage} />
+      <Route path={"/dashboard"}> 
         {() => (
           <DashboardLayout>
             <Dashboard />
