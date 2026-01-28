@@ -47,10 +47,9 @@ export default function PortfolioDetail({ portfolioId }: PortfolioDetailProps) {
         symbol: formData.symbol,
         name: formData.name,
         assetType: formData.assetType,
-        quantity: formData.quantity,
-        purchasePrice: formData.purchasePrice,
-        purchaseDate: new Date(formData.purchaseDate),
-        notes: formData.notes,
+        quantity: parseFloat(formData.quantity),
+        purchasePrice: parseFloat(formData.purchasePrice),
+        purchaseDate: formData.purchaseDate,
       });
       setFormData({
         symbol: "",
@@ -74,7 +73,6 @@ export default function PortfolioDetail({ portfolioId }: PortfolioDetailProps) {
       try {
         await deleteHoldingMutation.mutateAsync({
           holdingId,
-          portfolioId,
         });
         refetch();
         toast.success("Holding deleted successfully");

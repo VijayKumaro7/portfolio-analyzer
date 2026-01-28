@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { protectedProcedure, router } from "../_core/trpc";
+import { enforcePortfolioLimit, getPortfolioLimit } from "../_core/portfolioLimits";
 import {
   getUserPortfolios,
   getPortfolioById,
@@ -18,10 +19,19 @@ import {
 
 export const portfolioRouter = router({
   /**
-   * Get all portfolios for the current user
+   * Get all portfolios for the current user with limit info
    */
   list: protectedProcedure.query(async ({ ctx }) => {
-    return getUserPortfolios(ctx.user.id);
+    const portfolios = await getUserPortfolios(ctx.user.id);
+    const limit = await getPortfolioLimit(ctx.user.id);
+    const count = portfolios.length;
+
+    return {
+      portfolios,
+      limit,
+      count,
+      canCreateMore: limit === -1 || count < limit,
+    };
   }),
 
   /**
@@ -39,7 +49,7 @@ export const portfolioRouter = router({
     }),
 
   /**
-   * Create a new portfolio
+   * Create a new portfolio with limit enforcement
    */
   create: protectedProcedure
     .input(
@@ -49,6 +59,9 @@ export const portfolioRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      // Enforce portfolio limit before creating
+      await enforcePortfolioLimit(ctx.user.id);
+
       return createPortfolio({
         userId: ctx.user.id,
         name: input.name,
@@ -98,13 +111,12 @@ export const portfolioRouter = router({
     .input(
       z.object({
         portfolioId: z.number(),
-        symbol: z.string().min(1),
-        name: z.string().min(1),
+        symbol: z.string().min(1, "Symbol is required"),
+        name: z.string().min(1, "Asset name is required"),
         assetType: z.enum(["stock", "fund", "crypto"]),
-        quantity: z.string().min(1),
-        purchasePrice: z.string().min(1),
-        purchaseDate: z.date(),
-        notes: z.string().optional(),
+        quantity: z.number().positive("Quantity must be positive"),
+        purchasePrice: z.number().positive("Purchase price must be positive"),
+        purchaseDate: z.string(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -112,15 +124,15 @@ export const portfolioRouter = router({
       if (!portfolio || portfolio.userId !== ctx.user.id) {
         throw new Error("Portfolio not found or unauthorized");
       }
+
       return createHolding({
         portfolioId: input.portfolioId,
         symbol: input.symbol,
         name: input.name,
         assetType: input.assetType,
-        quantity: input.quantity,
-        purchasePrice: input.purchasePrice,
-        purchaseDate: input.purchaseDate,
-        notes: input.notes,
+        quantity: input.quantity.toString(),
+        purchasePrice: input.purchasePrice.toString(),
+        purchaseDate: new Date(input.purchaseDate),
       });
     }),
 
@@ -131,69 +143,66 @@ export const portfolioRouter = router({
     .input(
       z.object({
         holdingId: z.number(),
-        portfolioId: z.number(),
-        symbol: z.string().optional(),
-        name: z.string().optional(),
-        assetType: z.enum(["stock", "fund", "crypto"]).optional(),
-        quantity: z.string().optional(),
-        purchasePrice: z.string().optional(),
-        purchaseDate: z.date().optional(),
-        currentPrice: z.string().optional(),
-        notes: z.string().optional(),
+        quantity: z.number().positive().optional(),
+        purchasePrice: z.number().positive().optional(),
       })
     )
     .mutation(async ({ input, ctx }) => {
-      const portfolio = await getPortfolioById(input.portfolioId);
-      if (!portfolio || portfolio.userId !== ctx.user.id) {
-        throw new Error("Portfolio not found or unauthorized");
-      }
       const holding = await getHoldingById(input.holdingId);
-      if (!holding || holding.portfolioId !== input.portfolioId) {
-        throw new Error("Holding not found or unauthorized");
+      if (!holding) {
+        throw new Error("Holding not found");
       }
-      const { holdingId, portfolioId, ...updates } = input;
-      return updateHolding(holdingId, updates);
+
+      const portfolio = await getPortfolioById(holding.portfolioId);
+      if (!portfolio || portfolio.userId !== ctx.user.id) {
+        throw new Error("Unauthorized");
+      }
+
+      return updateHolding(input.holdingId, {
+        quantity: input.quantity?.toString(),
+        purchasePrice: input.purchasePrice?.toString(),
+      });
     }),
 
   /**
    * Delete a holding
    */
   deleteHolding: protectedProcedure
-    .input(
-      z.object({
-        holdingId: z.number(),
-        portfolioId: z.number(),
-      })
-    )
+    .input(z.object({ holdingId: z.number() }))
     .mutation(async ({ input, ctx }) => {
+      const holding = await getHoldingById(input.holdingId);
+      if (!holding) {
+        throw new Error("Holding not found");
+      }
+
+      const portfolio = await getPortfolioById(holding.portfolioId);
+      if (!portfolio || portfolio.userId !== ctx.user.id) {
+        throw new Error("Unauthorized");
+      }
+
+      return deleteHolding(input.holdingId);
+    }),
+
+  /**
+   * Get holdings for a portfolio
+   */
+  getHoldings: protectedProcedure
+    .input(z.object({ portfolioId: z.number() }))
+    .query(async ({ input, ctx }) => {
       const portfolio = await getPortfolioById(input.portfolioId);
       if (!portfolio || portfolio.userId !== ctx.user.id) {
         throw new Error("Portfolio not found or unauthorized");
       }
-      const holding = await getHoldingById(input.holdingId);
-      if (!holding || holding.portfolioId !== input.portfolioId) {
-        throw new Error("Holding not found or unauthorized");
-      }
-      return deleteHolding(input.holdingId);
+      return getPortfolioHoldings(input.portfolioId);
     }),
 
   /**
    * Get price history for a holding
    */
   getPriceHistory: protectedProcedure
-    .input(
-      z.object({
-        holdingId: z.number(),
-        portfolioId: z.number(),
-        limit: z.number().optional(),
-      })
-    )
-    .query(async ({ input, ctx }) => {
-      const portfolio = await getPortfolioById(input.portfolioId);
-      if (!portfolio || portfolio.userId !== ctx.user.id) {
-        throw new Error("Portfolio not found or unauthorized");
-      }
-      return getPriceHistory(input.holdingId, input.limit);
+    .input(z.object({ holdingId: z.number() }))
+    .query(async ({ input }) => {
+      return getPriceHistory(input.holdingId);
     }),
 
   /**
@@ -207,5 +216,35 @@ export const portfolioRouter = router({
         throw new Error("Portfolio not found or unauthorized");
       }
       return getLatestMetrics(input.portfolioId);
+    }),
+
+  /**
+   * Save metrics for a portfolio
+   */
+  saveMetrics: protectedProcedure
+    .input(
+      z.object({
+        portfolioId: z.number(),
+        totalValue: z.number(),
+        totalCost: z.number(),
+        totalReturn: z.number(),
+        returnPercentage: z.number(),
+        volatility: z.number().optional(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const portfolio = await getPortfolioById(input.portfolioId);
+      if (!portfolio || portfolio.userId !== ctx.user.id) {
+        throw new Error("Portfolio not found or unauthorized");
+      }
+
+      return saveMetrics({
+        portfolioId: input.portfolioId,
+        totalValue: input.totalValue.toString(),
+        totalCost: input.totalCost.toString(),
+        totalReturn: input.totalReturn.toString(),
+        returnPercentage: input.returnPercentage.toString(),
+        volatility: input.volatility?.toString(),
+      });
     }),
 });

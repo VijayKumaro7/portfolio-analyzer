@@ -63,9 +63,9 @@ export default function Dashboard() {
         <div className="flex items-center justify-center py-12">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </div>
-      ) : portfolios && portfolios.length > 0 ? (
+      ) : portfolios && portfolios.portfolios && portfolios.portfolios.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 fade-in">
-          {portfolios.map((portfolio) => (
+          {portfolios.portfolios.map((portfolio: any) => (
             <Card
               key={portfolio.id}
               className="card-elegant p-6 cursor-pointer hover-lift"

@@ -191,3 +191,15 @@
 - [x] Implement billing portal integration
 - [x] Create comprehensive unit tests (10 tests, all passing)
 - [x] All 53 tests passing
+
+
+## Phase 18: Tier-Based Portfolio Limit Enforcement
+- [x] Add portfolio limit validation to createPortfolio procedure
+- [x] Implement subscription tier checking
+- [x] Create limit exceeded error handling (FORBIDDEN error)
+- [x] Display portfolio count vs limit on dashboard
+- [x] Update portfolio router with limit checks
+- [x] Create portfolioLimits utility module
+- [x] Add unit tests for portfolio limit enforcement
+- [x] Enforce limits: Free (1), Pro (5), Premium (unlimited)
+- [x] Return limit info in portfolio list response

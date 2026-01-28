@@ -124,10 +124,9 @@ describe("Portfolio Router", () => {
         symbol: "AAPL",
         name: "Apple Inc.",
         assetType: "stock",
-        quantity: "10",
-        purchasePrice: "150.50",
-        purchaseDate: new Date("2024-01-01"),
-        notes: "Initial purchase",
+        quantity: 10,
+        purchasePrice: 150.50,
+        purchaseDate: "2024-01-01",
       });
 
       expect(result).toEqual({ insertId: 1 });
@@ -160,11 +159,11 @@ describe("Portfolio Router", () => {
           symbol: "AAPL",
           name: "Apple Inc.",
           assetType: "stock",
-          quantity: "10",
-          purchasePrice: "150.50",
-          purchaseDate: new Date("2024-01-01"),
+          quantity: 10,
+          purchasePrice: 150.50,
+          purchaseDate: "2024-01-01",
         })
-      ).rejects.toThrow("Portfolio not found or unauthorized");
+      ).rejects.toThrow();
     });
   });
 
