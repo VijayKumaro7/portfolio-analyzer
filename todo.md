@@ -203,3 +203,17 @@
 - [x] Add unit tests for portfolio limit enforcement
 - [x] Enforce limits: Free (1), Pro (5), Premium (unlimited)
 - [x] Return limit info in portfolio list response
+
+
+## Phase 19: Tier-Based Feature Gates
+- [x] Create feature gates utility module (featureGates.ts)
+- [x] Implement advanced analytics feature gate (Pro+)
+- [x] Implement API access feature gate (Premium)
+- [x] Implement custom reports feature gate (Pro+)
+- [x] Create locked feature UI components (LockedFeature.tsx)
+- [x] Add upgrade prompts for locked features
+- [x] Implement feature availability checks in routers (featureGatesRouter)
+- [x] Create feature gates tests (14 tests, all passing)
+- [x] Create custom hooks for feature access (useFeatureAccess.ts)
+- [x] Add feature comparison table to pricing page
+- [x] Display feature status on dashboard
