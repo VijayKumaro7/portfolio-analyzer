@@ -12,6 +12,9 @@ import AssetDetail from "./pages/AssetDetail";
 import DemoMode from "./pages/DemoMode";
 import Pricing from "./pages/Pricing";
 import SubscriptionPage from "./pages/SubscriptionPage";
+import Blog from "./pages/Blog";
+import BlogArticle from "./pages/BlogArticle";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function Router() {
   return (
@@ -20,6 +23,9 @@ function Router() {
       <Route path={"/demo"} component={DemoMode} />
       <Route path={"/pricing"} component={Pricing} />
       <Route path={"/subscription"} component={SubscriptionPage} />
+      <Route path={"/blog"} component={Blog} />
+      <Route path={"/blog/:slug"} component={BlogArticle} />
+      <Route path={"/admin"} component={AdminDashboard} />
       <Route path={"/dashboard"}> 
         {() => (
           <DashboardLayout>

@@ -9,6 +9,8 @@ import { marketDataRouter } from "./routers/marketData";
 import { demoModeRouter } from "./routers/demoMode";
 import { subscriptionRouter } from "./routers/subscription";
 import { featureGatesRouter } from "./routers/featureGates";
+import { blogRouter } from "./routers/blog";
+import { adminAnalyticsRouter } from "./routers/adminAnalytics";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -28,9 +30,11 @@ export const appRouter = router({
   portfolio: portfolioRouter,
   analysis: analysisRouter,
   chartAnalysis: chartAnalysisRouter,
+  blog: blogRouter,
   marketData: marketDataRouter,
   demoMode: demoModeRouter,
   featureGates: featureGatesRouter,
+  adminAnalytics: adminAnalyticsRouter,
 });
 
 export type AppRouter = typeof appRouter;

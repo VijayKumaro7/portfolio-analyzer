@@ -73,6 +73,13 @@ export default function Home() {
             >
               Pricing
             </Button>
+            <Button
+              variant="ghost"
+              onClick={() => setLocation("/blog")}
+              className="text-foreground hover:text-primary"
+            >
+              Blog
+            </Button>
             <ThemeToggle />
             {isAuthenticated ? (
               <>

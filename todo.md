@@ -217,3 +217,42 @@
 - [x] Create custom hooks for feature access (useFeatureAccess.ts)
 - [x] Add feature comparison table to pricing page
 - [x] Display feature status on dashboard
+
+
+## Phase 20: Admin Analytics Dashboard
+- [x] Create admin role verification
+- [x] Build subscription metrics dashboard
+- [x] Display MRR and churn rate calculations
+- [x] Show tier distribution charts
+- [x] Display active users metrics
+- [x] Create user management interface
+- [x] Add revenue analytics
+- [x] Implement admin-only routes and access control
+- [x] Create admin analytics router with tRPC procedures
+- [x] Create database helpers for metrics calculations
+- [x] Implement subscription metrics (MRR, churn rate, tier distribution)
+- [x] Implement active users tracking (7-day, 30-day)
+- [x] Implement revenue analytics (total, monthly, top paying users)
+- [x] Create user management with pagination
+- [x] Create comprehensive unit tests (8 tests, all passing)
+- [x] Add admin dashboard page with charts and visualizations
+- [x] Integrate admin dashboard route into app
+
+## Phase 21: Blog & Resource Center
+- [x] Create blog database schema
+- [x] Build blog article management interface
+- [x] Create blog listing page
+- [x] Build individual article pages
+- [x] Add article categories and tags
+- [x] Implement search functionality
+- [x] Add featured articles section
+- [x] Create resource guides and tutorials
+- [x] Create blog router with tRPC procedures
+- [x] Create database helpers for blog operations
+- [x] Implement blog article listing with pagination
+- [x] Implement blog article retrieval by slug
+- [x] Implement featured articles display
+- [x] Create comprehensive unit tests (8 tests, all passing)
+- [x] Add blog listing page component
+- [x] Add blog detail page component
+- [x] Integrate blog routes into app
