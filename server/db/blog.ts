@@ -1,4 +1,4 @@
-import { eq, desc, and, like } from "drizzle-orm";
+import { eq, desc, and, like, or } from "drizzle-orm";
 import { getDb } from "../db";
 import { blogArticles } from "../../drizzle/schema";
 import type { InsertBlogArticle, BlogArticle } from "../../drizzle/schema";
@@ -66,13 +66,21 @@ export async function searchBlogArticles(query: string) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
+  const searchPattern = `%${query}%`;
+
   return db
     .select()
     .from(blogArticles)
     .where(
       and(
         eq(blogArticles.published, 1),
-        like(blogArticles.title, `%${query}%`)
+        // Search in title, content, category, and tags
+        or(
+          like(blogArticles.title, searchPattern),
+          like(blogArticles.content, searchPattern),
+          like(blogArticles.category, searchPattern),
+          like(blogArticles.tags, searchPattern)
+        )
       )
     )
     .orderBy(desc(blogArticles.publishedAt));

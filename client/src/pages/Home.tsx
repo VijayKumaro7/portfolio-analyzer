@@ -187,7 +187,7 @@ export default function Home() {
             <div className="relative h-96 lg:h-full min-h-96 fade-in" style={{ animationDelay: "0.2s" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-2xl"></div>
               <img
-                src="/hero-chart.jpg"
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663301308772/PgaBfRefFjisqynO.jpg"
                 alt="Portfolio Dashboard"
                 className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift"
               />
@@ -281,7 +281,7 @@ export default function Home() {
             <div className="relative h-96 fade-in" style={{ animationDelay: "0.2s" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-2xl"></div>
               <img
-                src="/feature-analytics.jpg"
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663301308772/SROkcGHEVOzRpyCZ.jpg"
                 alt="Analytics Dashboard"
                 className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift"
               />
@@ -293,7 +293,7 @@ export default function Home() {
             <div className="relative h-96 fade-in" style={{ animationDelay: "0.1s" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-2xl"></div>
               <img
-                src="/feature-security.jpg"
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663301308772/OwnlAJdQDRaRsagT.jpg"
                 alt="Security & Protection"
                 className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift"
               />

@@ -256,3 +256,12 @@
 - [x] Add blog listing page component
 - [x] Add blog detail page component
 - [x] Integrate blog routes into app
+
+## Phase 22: Blog Search Functionality
+- [x] Add search procedure to blog router
+- [x] Create database helper for article search
+- [x] Update Blog page with search UI component
+- [x] Write and run search tests
+- [x] Test search across title, content, category, and tags
+- [x] Enhanced search to look in title, content, category, and tags
+- [x] All 12 blog tests passing (including 5 new search tests)

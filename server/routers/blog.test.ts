@@ -47,12 +47,45 @@ describe("Blog Router", () => {
     expect(Array.isArray(result.articles)).toBe(true);
   });
 
-  it("should search blog articles", async () => {
+  it("should search blog articles by title", async () => {
     const caller = blogRouter.createCaller(userContext);
     const result = await caller.search({ query: "portfolio" });
 
     expect(result).toHaveProperty("articles");
     expect(Array.isArray(result.articles)).toBe(true);
+  });
+
+  it("should search blog articles by content", async () => {
+    const caller = blogRouter.createCaller(userContext);
+    const result = await caller.search({ query: "investment" });
+
+    expect(result).toHaveProperty("articles");
+    expect(Array.isArray(result.articles)).toBe(true);
+  });
+
+  it("should search blog articles by category", async () => {
+    const caller = blogRouter.createCaller(userContext);
+    const result = await caller.search({ query: "Management" });
+
+    expect(result).toHaveProperty("articles");
+    expect(Array.isArray(result.articles)).toBe(true);
+  });
+
+  it("should search blog articles by tags", async () => {
+    const caller = blogRouter.createCaller(userContext);
+    const result = await caller.search({ query: "risk" });
+
+    expect(result).toHaveProperty("articles");
+    expect(Array.isArray(result.articles)).toBe(true);
+  });
+
+  it("should return empty array for non-matching search", async () => {
+    const caller = blogRouter.createCaller(userContext);
+    const result = await caller.search({ query: "xyznonexistentquery123" });
+
+    expect(result).toHaveProperty("articles");
+    expect(Array.isArray(result.articles)).toBe(true);
+    expect(result.articles.length).toBe(0);
   });
 
   it("should get articles by category", async () => {
