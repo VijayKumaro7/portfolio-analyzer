@@ -51,9 +51,9 @@ export default function Dashboard() {
         </div>
         <Button
           onClick={() => setIsCreateOpen(true)}
-          className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 transition-all duration-300 ease-out hover:scale-105 hover:shadow-lg active:scale-95"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-4 h-4 transition-transform duration-300 ease-out group-hover:rotate-90" />
           New Portfolio
         </Button>
       </div>
@@ -68,7 +68,7 @@ export default function Dashboard() {
           {portfolios.portfolios.map((portfolio: any) => (
             <Card
               key={portfolio.id}
-              className="card-elegant p-6 cursor-pointer hover-lift"
+              className="card-elegant p-6 cursor-pointer hover-lift card-hover transition-all duration-300 ease-out"
               onClick={() => setLocation(`/portfolio/${portfolio.id}`)}
             >
               <div className="space-y-4">

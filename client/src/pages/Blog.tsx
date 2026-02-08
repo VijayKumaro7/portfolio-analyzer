@@ -55,14 +55,14 @@ export default function Blog() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="sticky top-0 z-40 border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="sticky top-0 z-40 border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300 ease-out">
         <div className="container py-4">
           <div className="flex items-center gap-4 mb-6">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setLocation("/")}
-              className="gap-2"
+              className="gap-2 transition-all duration-300 ease-out hover:scale-105 hover:-translate-x-1"
             >
               <ChevronLeft className="h-4 w-4" />
               Back
@@ -82,7 +82,7 @@ export default function Blog() {
                 setSearchQuery(e.target.value);
                 setCurrentPage(0);
               }}
-              className="pl-10 py-6 text-base"
+              className="pl-10 py-6 text-base transition-all duration-300 ease-out focus:scale-105 focus:shadow-lg"
             />
           </div>
 
@@ -97,6 +97,7 @@ export default function Blog() {
                   setSelectedCategory(null);
                   setCurrentPage(0);
                 }}
+                className="transition-all duration-300 ease-out hover:scale-105"
               >
                 All Articles
               </Button>
@@ -109,6 +110,7 @@ export default function Blog() {
                     setSelectedCategory(cat);
                     setCurrentPage(0);
                   }}
+                  className="transition-all duration-300 ease-out hover:scale-105"
                 >
                   {cat}
                 </Button>
@@ -128,7 +130,7 @@ export default function Blog() {
               {featuredData.articles.map((article: any, index: number) => (
                 <Card
                   key={article.id}
-                  className="group cursor-pointer overflow-hidden border border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10"
+                  className="group cursor-pointer overflow-hidden border border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-300 ease-out hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-2 hover:scale-105"
                   onClick={() => setLocation(`/blog/${article.slug}`)}
                   style={{
                     animation: `fade-in 0.5s ease-out ${index * 0.1}s both`,
@@ -188,7 +190,7 @@ export default function Blog() {
               {articles.map((article: any, index: number) => (
                 <Card
                   key={article.id}
-                  className="group cursor-pointer overflow-hidden border border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10"
+                  className="group cursor-pointer overflow-hidden border border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-300 ease-out hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-2 hover:scale-105"
                   onClick={() => setLocation(`/blog/${article.slug}`)}
                   style={{
                     animation: `fade-in 0.5s ease-out ${index * 0.05}s both`,

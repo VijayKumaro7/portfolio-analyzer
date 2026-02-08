@@ -47,7 +47,7 @@ export default function Home() {
       </div>
 
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 backdrop-blur-md bg-background/80 border-b border-border/40">
+      <nav className="sticky top-0 z-50 backdrop-blur-md bg-background/80 border-b border-border/40 transition-all duration-300 ease-out">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
@@ -62,21 +62,21 @@ export default function Home() {
             <Button
               variant="ghost"
               onClick={handleDemo}
-              className="text-foreground hover:text-primary"
+              className="text-foreground hover:text-primary transition-all duration-300 ease-out hover:scale-105"
             >
               Try Demo
             </Button>
             <Button
               variant="ghost"
               onClick={handlePricing}
-              className="text-foreground hover:text-primary"
+              className="text-foreground hover:text-primary transition-all duration-300 ease-out hover:scale-105"
             >
               Pricing
             </Button>
             <Button
               variant="ghost"
               onClick={() => setLocation("/blog")}
-              className="text-foreground hover:text-primary"
+              className="text-foreground hover:text-primary transition-all duration-300 ease-out hover:scale-105"
             >
               Blog
             </Button>
@@ -135,22 +135,22 @@ export default function Home() {
                   ✨ What You Get
                 </p>
                 <ul className="space-y-2 text-foreground">
-                  <li className="flex items-center gap-3">
-                    <BarChart3 className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span>Advanced portfolio analytics and visualizations</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <TrendingUp className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span>Real-time market data and price updates</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Zap className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span>AI-powered investment recommendations</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Shield className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span>Secure portfolio management and PDF reports</span>
-                  </li>
+                <li className="flex items-center gap-3 transition-all duration-300 ease-out hover:translate-x-1">
+                  <BarChart3 className="w-5 h-5 text-primary flex-shrink-0" />
+                  <span>Advanced portfolio analytics and visualizations</span>
+                </li>
+                <li className="flex items-center gap-3 transition-all duration-300 ease-out hover:translate-x-1">
+                  <TrendingUp className="w-5 h-5 text-primary flex-shrink-0" />
+                  <span>Real-time market data and price updates</span>
+                </li>
+                <li className="flex items-center gap-3 transition-all duration-300 ease-out hover:translate-x-1">
+                  <Zap className="w-5 h-5 text-primary flex-shrink-0" />
+                  <span>AI-powered investment recommendations</span>
+                </li>
+                <li className="flex items-center gap-3 transition-all duration-300 ease-out hover:translate-x-1">
+                  <Shield className="w-5 h-5 text-primary flex-shrink-0" />
+                  <span>Secure portfolio management and PDF reports</span>
+                </li>
                 </ul>
               </div>
 
@@ -189,7 +189,7 @@ export default function Home() {
               <img
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663301308772/PgaBfRefFjisqynO.jpg"
                 alt="Portfolio Dashboard"
-                className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift"
+                className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift transition-all duration-500 ease-out hover:shadow-2xl hover:scale-105"
               />
             </div>
           </div>
@@ -210,7 +210,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* Feature 1 */}
-            <Card className="card-elegant p-8 hover-lift fade-in" style={{ animationDelay: "0.1s" }}>
+            <Card className="card-elegant p-8 hover-lift fade-in card-hover" style={{ animationDelay: "0.1s" }}>
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                 <LineChart className="w-6 h-6 text-primary" />
               </div>
@@ -223,7 +223,7 @@ export default function Home() {
             </Card>
 
             {/* Feature 2 */}
-            <Card className="card-elegant p-8 hover-lift fade-in" style={{ animationDelay: "0.2s" }}>
+            <Card className="card-elegant p-8 hover-lift fade-in card-hover" style={{ animationDelay: "0.2s" }}>
               <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
                 <TrendingUp className="w-6 h-6 text-accent" />
               </div>
@@ -236,7 +236,7 @@ export default function Home() {
             </Card>
 
             {/* Feature 3 */}
-            <Card className="card-elegant p-8 hover-lift fade-in" style={{ animationDelay: "0.3s" }}>
+            <Card className="card-elegant p-8 hover-lift fade-in card-hover" style={{ animationDelay: "0.3s" }}>
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                 <Zap className="w-6 h-6 text-primary" />
               </div>
@@ -283,7 +283,7 @@ export default function Home() {
               <img
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663301308772/SROkcGHEVOzRpyCZ.jpg"
                 alt="Analytics Dashboard"
-                className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift"
+                className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift transition-all duration-500 ease-out hover:shadow-2xl hover:scale-105"
               />
             </div>
           </div>
@@ -295,7 +295,7 @@ export default function Home() {
               <img
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663301308772/OwnlAJdQDRaRsagT.jpg"
                 alt="Security & Protection"
-                className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift"
+                className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift transition-all duration-500 ease-out hover:shadow-2xl hover:scale-105"
               />
             </div>
             <div className="fade-in" style={{ animationDelay: "0.2s" }}>

@@ -102,10 +102,10 @@ export default function Pricing() {
                 style={{ animationDelay: `${index * 0.15}s` }}
               >
                 <Card
-                  className={`card-elegant p-8 h-full flex flex-col relative transition-all duration-300 ${
+                  className={`card-elegant p-8 h-full flex flex-col relative transition-all duration-300 ease-out ${
                     tier.highlighted
-                      ? "ring-2 ring-primary shadow-2xl scale-105"
-                      : "hover-lift"
+                      ? "ring-2 ring-primary shadow-2xl scale-105 hover:shadow-primary/50 hover:ring-primary/80"
+                      : "hover-lift card-hover hover:-translate-y-2"
                   }`}
                 >
                   {tier.highlighted && (
@@ -132,10 +132,10 @@ export default function Pricing() {
                   </div>
 
                   <Button
-                    className={`w-full mb-8 py-6 text-lg font-semibold transition-all ${
+                    className={`w-full mb-8 py-6 text-lg font-semibold transition-all duration-300 ease-out hover:scale-105 active:scale-95 ${
                       tier.highlighted
-                        ? "bg-primary hover:bg-primary/90 text-white"
-                        : "border-border hover:bg-muted"
+                        ? "bg-primary hover:bg-primary/90 text-white hover:shadow-lg"
+                        : "border-border hover:bg-muted hover:shadow-md"
                     }`}
                     variant={tier.highlighted ? "default" : "outline"}
                   >
@@ -146,7 +146,7 @@ export default function Pricing() {
                     {tier.features.map((feature, featureIndex) => (
                       <div
                         key={feature.name}
-                        className="flex items-start gap-3 fade-in"
+                        className="flex items-start gap-3 fade-in transition-all duration-300 ease-out hover:translate-x-1"
                         style={{ animationDelay: `${0.3 + featureIndex * 0.05}s` }}
                       >
                         {feature.included ? (

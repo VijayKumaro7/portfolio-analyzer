@@ -19,7 +19,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
+      <Route path={"\\"} component={Home} />
       <Route path={"/demo"} component={DemoMode} />
       <Route path={"/pricing"} component={Pricing} />
       <Route path={"/subscription"} component={SubscriptionPage} />
@@ -28,23 +28,29 @@ function Router() {
       <Route path={"/admin"} component={AdminDashboard} />
       <Route path={"/dashboard"}> 
         {() => (
-          <DashboardLayout>
-            <Dashboard />
-          </DashboardLayout>
+          <div className="page-enter">
+            <DashboardLayout>
+              <Dashboard />
+            </DashboardLayout>
+          </div>
         )}
       </Route>
       <Route path={"/portfolio/:portfolioId"}>
         {(params) => (
-          <DashboardLayout>
-            <PortfolioDetail portfolioId={parseInt(params.portfolioId)} />
-          </DashboardLayout>
+          <div className="page-enter">
+            <DashboardLayout>
+              <PortfolioDetail portfolioId={parseInt(params.portfolioId)} />
+            </DashboardLayout>
+          </div>
         )}
       </Route>
       <Route path={"/asset/:holdingId"}>
         {(params) => (
-          <DashboardLayout>
-            <AssetDetail holdingId={parseInt(params.holdingId)} />
-          </DashboardLayout>
+          <div className="page-enter">
+            <DashboardLayout>
+              <AssetDetail holdingId={parseInt(params.holdingId)} />
+            </DashboardLayout>
+          </div>
         )}
       </Route>
       <Route path={"/404"} component={NotFound} />

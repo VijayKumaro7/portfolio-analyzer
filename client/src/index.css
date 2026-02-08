@@ -483,4 +483,295 @@
   .bounce-in {
     animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
+  
+  /* Enhanced smooth transitions */
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .slide-down {
+    animation: slide-down 0.5s ease-out;
+  }
+  
+  @keyframes slide-left {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .slide-left {
+    animation: slide-left 0.5s ease-out;
+  }
+  
+  @keyframes slide-right {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .slide-right {
+    animation: slide-right 0.5s ease-out;
+  }
+  
+  /* Smooth color transitions */
+  @keyframes color-shift {
+    0%, 100% {
+      color: var(--primary);
+    }
+    50% {
+      color: var(--accent);
+    }
+  }
+  
+  .color-shift {
+    animation: color-shift 3s ease-in-out infinite;
+  }
+  
+  /* Glow effect */
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(98, 102, 153, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(98, 102, 153, 0.8);
+    }
+  }
+  
+  .glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+  
+  /* Smooth expand animation */
+  @keyframes expand {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  
+  .expand {
+    animation: expand 0.4s ease-out;
+  }
+  
+  /* Smooth collapse animation */
+  @keyframes collapse {
+    from {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.95) translateY(10px);
+    }
+  }
+  
+  .collapse {
+    animation: collapse 0.4s ease-out;
+  }
+  
+  /* Smooth rotate animation */
+  @keyframes rotate-smooth {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .rotate-smooth {
+    animation: rotate-smooth 2s linear infinite;
+  }
+  
+  /* Smooth flip animation */
+  @keyframes flip {
+    0% {
+      transform: perspective(400px) rotateY(0);
+    }
+    100% {
+      transform: perspective(400px) rotateY(360deg);
+    }
+  }
+  
+  .flip {
+    animation: flip 0.6s ease-out;
+  }
+  
+  /* Smooth wiggle animation */
+  @keyframes wiggle {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    75% {
+      transform: translateX(5px);
+    }
+  }
+  
+  .wiggle {
+    animation: wiggle 0.4s ease-in-out;
+  }
+  
+  /* Smooth shake animation */
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0) translateY(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+      transform: translateX(-2px) translateY(-2px);
+    }
+    20%, 40%, 60%, 80% {
+      transform: translateX(2px) translateY(2px);
+    }
+  }
+  
+  .shake {
+    animation: shake 0.5s ease-in-out;
+  }
+  
+  /* Smooth pulse grow animation */
+  @keyframes pulse-grow {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.8;
+    }
+  }
+  
+  .pulse-grow {
+    animation: pulse-grow 2s ease-in-out infinite;
+  }
+  
+  /* Smooth text reveal animation */
+  @keyframes text-reveal {
+    from {
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  
+  .text-reveal {
+    animation: text-reveal 0.8s ease-out;
+  }
+  
+  /* Enhanced hover effects for cards */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .card-hover:hover {
+    @apply -translate-y-2 shadow-xl;
+  }
+  
+  /* Smooth button hover effects */
+  .btn-smooth {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .btn-smooth:hover {
+    @apply scale-105 shadow-lg;
+  }
+  
+  .btn-smooth:active {
+    @apply scale-95;
+  }
+  
+  /* Smooth link hover effects */
+  .link-smooth {
+    @apply relative transition-all duration-300 ease-out;
+  }
+  
+  .link-smooth::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.3s ease-out;
+  }
+  
+  .link-smooth:hover::after {
+    width: 100%;
+  }
+  
+  /* Smooth input focus effects */
+  input, textarea, select {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  input:focus, textarea:focus, select:focus {
+    @apply ring-2 ring-primary ring-offset-2;
+  }
+  
+  /* Smooth backdrop blur */
+  .backdrop-smooth {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .backdrop-smooth:hover {
+    @apply backdrop-blur-md;
+  }
+  
+  /* Page transition animation */
+  @keyframes page-enter {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .page-enter {
+    animation: page-enter 0.5s ease-out;
+  }
+  
+  @keyframes page-exit {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+  
+  .page-exit {
+    animation: page-exit 0.3s ease-out;
+  }
 }
