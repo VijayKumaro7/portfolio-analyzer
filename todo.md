@@ -299,3 +299,19 @@
 - [x] Enhanced input focus effects with smooth transitions
 - [x] All animations use ease-out timing for natural feel
 - [x] Dev server compiling without errors
+
+## Phase 25: Scroll-Based Reveal Animations
+- [x] Create custom useScrollReveal hook with Intersection Observer
+- [x] Add scroll reveal CSS animations and classes
+- [x] Integrate scroll reveal animations into Home page sections
+- [x] Add scroll animations to feature cards and content blocks
+- [x] Test scroll animations and optimize performance
+- [x] Verify smooth performance on various devices
+- [x] Created useScrollReveal hook with configurable threshold and rootMargin
+- [x] Added 5 scroll reveal animation classes (fade-up, fade-left, fade-right, scale, rotate)
+- [x] Integrated scroll reveals into Features section with staggered animations
+- [x] Added scroll reveals to Analytics and Security sections
+- [x] Implemented CTA section with scale-in animation
+- [x] Created separate scroll-reveal.css file for animations
+- [x] All animations use 600ms ease-out transitions
+- [x] Intersection Observer properly configured for performance

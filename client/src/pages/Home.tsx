@@ -5,10 +5,18 @@ import { getLoginUrl } from "@/const";
 import { useLocation } from "wouter";
 import { TrendingUp, BarChart3, Zap, Shield, LineChart, Sparkles, LogOut } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 export default function Home() {
   const { user, loading, isAuthenticated, logout } = useAuth();
   const [, setLocation] = useLocation();
+
+  // Scroll reveal hooks for different sections
+  const heroSection = useScrollReveal({ threshold: 0.2 });
+  const featuresSection = useScrollReveal({ threshold: 0.15 });
+  const analyticsSection = useScrollReveal({ threshold: 0.15 });
+  const securitySection = useScrollReveal({ threshold: 0.15 });
+  const ctaSection = useScrollReveal({ threshold: 0.2 });
 
   const handleLogout = async () => {
     await logout();
@@ -199,7 +207,7 @@ export default function Home() {
       {/* Features Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 fade-in">
+          <div ref={featuresSection.ref} className={`text-center mb-16 fade-in scroll-reveal ${featuresSection.isVisible ? 'visible' : ''}`}>
             <h2 className="text-4xl font-bold text-foreground mb-4 gradient-text">
               Powerful Features for Smart Investors
             </h2>
@@ -208,9 +216,9 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 scroll-reveal-stagger" ref={featuresSection.ref}>
             {/* Feature 1 */}
-            <Card className="card-elegant p-8 hover-lift fade-in card-hover" style={{ animationDelay: "0.1s" }}>
+            <Card className="card-elegant p-8 hover-lift fade-in card-hover scroll-reveal" style={{ animationDelay: "0.1s" }}>
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                 <LineChart className="w-6 h-6 text-primary" />
               </div>
@@ -223,7 +231,7 @@ export default function Home() {
             </Card>
 
             {/* Feature 2 */}
-            <Card className="card-elegant p-8 hover-lift fade-in card-hover" style={{ animationDelay: "0.2s" }}>
+            <Card className="card-elegant p-8 hover-lift fade-in card-hover scroll-reveal" style={{ animationDelay: "0.2s" }}>
               <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
                 <TrendingUp className="w-6 h-6 text-accent" />
               </div>
@@ -236,7 +244,7 @@ export default function Home() {
             </Card>
 
             {/* Feature 3 */}
-            <Card className="card-elegant p-8 hover-lift fade-in card-hover" style={{ animationDelay: "0.3s" }}>
+            <Card className="card-elegant p-8 hover-lift fade-in card-hover scroll-reveal" style={{ animationDelay: "0.3s" }}>
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                 <Zap className="w-6 h-6 text-primary" />
               </div>
@@ -256,7 +264,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto space-y-20">
           {/* Feature Row 1 */}
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="fade-in">
+            <div ref={analyticsSection.ref} className={`fade-in scroll-reveal-left ${analyticsSection.isVisible ? 'visible' : ''}`}>
               <h3 className="text-3xl font-bold text-foreground mb-4 gradient-text">
                 Comprehensive Analytics
               </h3>
@@ -278,7 +286,7 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="relative h-96 fade-in" style={{ animationDelay: "0.2s" }}>
+            <div ref={analyticsSection.ref} className={`relative h-96 fade-in scroll-reveal-right ${analyticsSection.isVisible ? 'visible' : ''}`} style={{ animationDelay: "0.2s" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-2xl"></div>
               <img
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663301308772/SROkcGHEVOzRpyCZ.jpg"
@@ -290,7 +298,7 @@ export default function Home() {
 
           {/* Feature Row 2 */}
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="relative h-96 fade-in" style={{ animationDelay: "0.1s" }}>
+            <div ref={securitySection.ref} className={`relative h-96 fade-in scroll-reveal-left ${securitySection.isVisible ? 'visible' : ''}`} style={{ animationDelay: "0.1s" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-2xl"></div>
               <img
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663301308772/OwnlAJdQDRaRsagT.jpg"
@@ -298,7 +306,7 @@ export default function Home() {
                 className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift transition-all duration-500 ease-out hover:shadow-2xl hover:scale-105"
               />
             </div>
-            <div className="fade-in" style={{ animationDelay: "0.2s" }}>
+            <div ref={securitySection.ref} className={`fade-in scroll-reveal-right ${securitySection.isVisible ? 'visible' : ''}`} style={{ animationDelay: "0.2s" }}>
               <h3 className="text-3xl font-bold text-foreground mb-4 gradient-text">
                 Secure & Reliable
               </h3>
@@ -326,7 +334,7 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary/10 to-accent/10 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto text-center fade-in">
+        <div ref={ctaSection.ref} className={`max-w-4xl mx-auto text-center fade-in scroll-reveal-scale ${ctaSection.isVisible ? 'visible' : ''}`}>
           <h2 className="text-4xl font-bold text-foreground mb-6 gradient-text">
             Ready to Master Your Investments?
           </h2>
