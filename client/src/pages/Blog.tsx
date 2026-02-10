@@ -67,7 +67,7 @@ export default function Blog() {
               <ChevronLeft className="h-4 w-4" />
               Back
             </Button>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Investment Blog & Resources
             </h1>
           </div>
@@ -125,8 +125,8 @@ export default function Blog() {
         {/* Featured Articles Section */}
         {!searchQuery && !selectedCategory && featuredData?.articles && featuredData.articles.length > 0 && (
           <div className="mb-16">
-            <h2 className="mb-6 text-2xl font-bold text-foreground">Featured Articles</h2>
-            <div className="grid gap-6 md:grid-cols-3">
+            <h2 className="mb-6 text-xl sm:text-2xl font-bold text-foreground">Featured Articles</h2>
+            <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
               {featuredData.articles.map((article: any, index: number) => (
                 <Card
                   key={article.id}
@@ -172,12 +172,12 @@ export default function Blog() {
 
         {/* Articles Grid */}
         <div>
-          <h2 className="mb-6 text-2xl font-bold text-foreground">
+          <h2 className="mb-6 text-xl sm:text-2xl font-bold text-foreground">
             {searchQuery ? "Search Results" : selectedCategory ? selectedCategory : "All Articles"}
           </h2>
 
           {isLoading ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {[...Array(6)].map((_, i) => (
                 <Card
                   key={i}
@@ -186,7 +186,7 @@ export default function Blog() {
               ))}
             </div>
           ) : articles && articles.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {articles.map((article: any, index: number) => (
                 <Card
                   key={article.id}
