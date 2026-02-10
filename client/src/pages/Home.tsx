@@ -5,19 +5,10 @@ import { getLoginUrl } from "@/const";
 import { useLocation } from "wouter";
 import { TrendingUp, BarChart3, Zap, Shield, LineChart, Sparkles, LogOut } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { MobileNav } from "@/components/MobileNav";
 
 export default function Home() {
   const { user, loading, isAuthenticated, logout } = useAuth();
   const [, setLocation] = useLocation();
-
-  // Scroll reveal hooks for different sections
-  const heroSection = useScrollReveal({ threshold: 0.2 });
-  const featuresSection = useScrollReveal({ threshold: 0.15 });
-  const analyticsSection = useScrollReveal({ threshold: 0.15 });
-  const securitySection = useScrollReveal({ threshold: 0.15 });
-  const ctaSection = useScrollReveal({ threshold: 0.2 });
 
   const handleLogout = async () => {
     await logout();
@@ -56,7 +47,7 @@ export default function Home() {
       </div>
 
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 backdrop-blur-md bg-background/80 border-b border-border/40 transition-all duration-300 ease-out">
+      <nav className="sticky top-0 z-50 backdrop-blur-md bg-background/80 border-b border-border/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
@@ -67,32 +58,32 @@ export default function Home() {
             </span>
           </div>
 
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="flex items-center gap-4">
             <Button
               variant="ghost"
               onClick={handleDemo}
-              className="text-foreground hover:text-primary transition-all duration-300 ease-out hover:scale-105"
+              className="text-foreground hover:text-primary"
             >
               Try Demo
             </Button>
             <Button
               variant="ghost"
               onClick={handlePricing}
-              className="text-foreground hover:text-primary transition-all duration-300 ease-out hover:scale-105"
+              className="text-foreground hover:text-primary"
             >
               Pricing
             </Button>
             <Button
               variant="ghost"
               onClick={() => setLocation("/blog")}
-              className="text-foreground hover:text-primary transition-all duration-300 ease-out hover:scale-105"
+              className="text-foreground hover:text-primary"
             >
               Blog
             </Button>
             <ThemeToggle />
             {isAuthenticated ? (
               <>
-                <span className="text-sm text-muted-foreground">
+                <span className="text-sm text-muted-foreground hidden sm:inline">
                   Welcome, {user?.name || "User"}
                 </span>
                 <Button
@@ -107,7 +98,7 @@ export default function Home() {
                   className="border-border hover:bg-muted gap-2"
                 >
                   <LogOut className="w-4 h-4" />
-                  Logout
+                  <span className="hidden sm:inline">Logout</span>
                 </Button>
               </>
             ) : (
@@ -119,21 +110,6 @@ export default function Home() {
               </Button>
             )}
           </div>
-
-          <MobileNav
-            isAuthenticated={isAuthenticated}
-            userName={user?.name || undefined}
-            onDashboard={handleDashboard}
-            onDemo={handleDemo}
-            onPricing={handlePricing}
-            onBlog={() => setLocation("/blog")}
-            onLogout={handleLogout}
-            onLogin={() => (window.location.href = getLoginUrl())}
-          >
-            <div className="px-4 py-2">
-              <ThemeToggle />
-            </div>
-          </MobileNav>
         </div>
       </nav>
 
@@ -144,12 +120,12 @@ export default function Home() {
             {/* Left Content */}
             <div className="space-y-8 fade-in">
               <div className="space-y-4">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground leading-tight">
+                <h1 className="text-5xl sm:text-6xl font-bold text-foreground leading-tight">
                   <span className="gradient-text">Elegant Portfolio</span>
                   <br />
                   <span className="gradient-text">Management</span>
                 </h1>
-                <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed">
+                <p className="text-xl text-muted-foreground leading-relaxed">
                   Analyze your investment portfolio with sophisticated visualizations, real-time price updates, and AI-powered recommendations. Track stocks, funds, and cryptocurrencies all in one elegant platform.
                 </p>
               </div>
@@ -159,22 +135,22 @@ export default function Home() {
                   ✨ What You Get
                 </p>
                 <ul className="space-y-2 text-foreground">
-                <li className="flex items-center gap-3 transition-all duration-300 ease-out hover:translate-x-1">
-                  <BarChart3 className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span>Advanced portfolio analytics and visualizations</span>
-                </li>
-                <li className="flex items-center gap-3 transition-all duration-300 ease-out hover:translate-x-1">
-                  <TrendingUp className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span>Real-time market data and price updates</span>
-                </li>
-                <li className="flex items-center gap-3 transition-all duration-300 ease-out hover:translate-x-1">
-                  <Zap className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span>AI-powered investment recommendations</span>
-                </li>
-                <li className="flex items-center gap-3 transition-all duration-300 ease-out hover:translate-x-1">
-                  <Shield className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span>Secure portfolio management and PDF reports</span>
-                </li>
+                  <li className="flex items-center gap-3">
+                    <BarChart3 className="w-5 h-5 text-primary flex-shrink-0" />
+                    <span>Advanced portfolio analytics and visualizations</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <TrendingUp className="w-5 h-5 text-primary flex-shrink-0" />
+                    <span>Real-time market data and price updates</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <Zap className="w-5 h-5 text-primary flex-shrink-0" />
+                    <span>AI-powered investment recommendations</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <Shield className="w-5 h-5 text-primary flex-shrink-0" />
+                    <span>Secure portfolio management and PDF reports</span>
+                  </li>
                 </ul>
               </div>
 
@@ -208,12 +184,12 @@ export default function Home() {
             </div>
 
             {/* Right Image */}
-            <div className="relative h-64 sm:h-80 md:h-96 lg:h-full min-h-64 fade-in" style={{ animationDelay: "0.2s" }}>
+            <div className="relative h-96 lg:h-full min-h-96 fade-in" style={{ animationDelay: "0.2s" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-2xl"></div>
               <img
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663301308772/PgaBfRefFjisqynO.jpg"
                 alt="Portfolio Dashboard"
-                className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift transition-all duration-500 ease-out hover:shadow-2xl hover:scale-105"
+                className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift"
               />
             </div>
           </div>
@@ -223,18 +199,18 @@ export default function Home() {
       {/* Features Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto">
-          <div ref={featuresSection.ref} className={`text-center mb-16 fade-in scroll-reveal ${featuresSection.isVisible ? 'visible' : ''}`}>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 gradient-text">
+          <div className="text-center mb-16 fade-in">
+            <h2 className="text-4xl font-bold text-foreground mb-4 gradient-text">
               Powerful Features for Smart Investors
             </h2>
-            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Everything you need to make informed investment decisions with confidence and clarity.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 scroll-reveal-stagger" ref={featuresSection.ref}>
+          <div className="grid md:grid-cols-3 gap-8">
             {/* Feature 1 */}
-            <Card className="card-elegant p-6 sm:p-8 hover-lift fade-in card-hover scroll-reveal" style={{ animationDelay: "0.3s" }}>
+            <Card className="card-elegant p-8 hover-lift fade-in" style={{ animationDelay: "0.1s" }}>
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                 <LineChart className="w-6 h-6 text-primary" />
               </div>
@@ -247,7 +223,7 @@ export default function Home() {
             </Card>
 
             {/* Feature 2 */}
-            <Card className="card-elegant p-8 hover-lift fade-in card-hover scroll-reveal" style={{ animationDelay: "0.2s" }}>
+            <Card className="card-elegant p-8 hover-lift fade-in" style={{ animationDelay: "0.2s" }}>
               <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
                 <TrendingUp className="w-6 h-6 text-accent" />
               </div>
@@ -260,7 +236,7 @@ export default function Home() {
             </Card>
 
             {/* Feature 3 */}
-            <Card className="card-elegant p-8 hover-lift fade-in card-hover scroll-reveal" style={{ animationDelay: "0.3s" }}>
+            <Card className="card-elegant p-8 hover-lift fade-in" style={{ animationDelay: "0.3s" }}>
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                 <Zap className="w-6 h-6 text-primary" />
               </div>
@@ -279,12 +255,12 @@ export default function Home() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-20">
           {/* Feature Row 1 */}
-          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div ref={analyticsSection.ref} className={`fade-in scroll-reveal-left ${analyticsSection.isVisible ? 'visible' : ''}`}>
-              <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 gradient-text">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="fade-in">
+              <h3 className="text-3xl font-bold text-foreground mb-4 gradient-text">
                 Comprehensive Analytics
               </h3>
-              <p className="text-base sm:text-lg text-muted-foreground mb-6">
+              <p className="text-lg text-muted-foreground mb-6">
                 Dive deep into your portfolio with advanced analytics. Analyze correlation matrices, risk-return relationships, and asset allocation breakdowns. Use technical indicators like moving averages, MACD, and RSI to identify trends and make data-driven decisions.
               </p>
               <ul className="space-y-3 text-foreground">
@@ -302,31 +278,31 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div ref={analyticsSection.ref} className={`relative h-64 sm:h-80 md:h-96 fade-in scroll-reveal-right ${analyticsSection.isVisible ? 'visible' : ''}`} style={{ animationDelay: "0.2s" }}>
+            <div className="relative h-96 fade-in" style={{ animationDelay: "0.2s" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-2xl"></div>
               <img
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663301308772/SROkcGHEVOzRpyCZ.jpg"
                 alt="Analytics Dashboard"
-                className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift transition-all duration-500 ease-out hover:shadow-2xl hover:scale-105"
+                className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift"
               />
             </div>
           </div>
 
           {/* Feature Row 2 */}
-          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div ref={securitySection.ref} className={`relative h-64 sm:h-80 md:h-96 fade-in scroll-reveal-left ${securitySection.isVisible ? 'visible' : ''}`} style={{ animationDelay: "0.1s" }}>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="relative h-96 fade-in" style={{ animationDelay: "0.1s" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-2xl"></div>
               <img
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663301308772/OwnlAJdQDRaRsagT.jpg"
                 alt="Security & Protection"
-                className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift transition-all duration-500 ease-out hover:shadow-2xl hover:scale-105"
+                className="relative w-full h-full object-cover rounded-2xl shadow-2xl hover-lift"
               />
             </div>
-            <div ref={securitySection.ref} className={`fade-in scroll-reveal-right ${securitySection.isVisible ? 'visible' : ''}`} style={{ animationDelay: "0.2s" }}>
-              <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 gradient-text">
+            <div className="fade-in" style={{ animationDelay: "0.2s" }}>
+              <h3 className="text-3xl font-bold text-foreground mb-4 gradient-text">
                 Secure & Reliable
               </h3>
-              <p className="text-base sm:text-lg text-muted-foreground mb-6">
+              <p className="text-lg text-muted-foreground mb-6">
                 Your portfolio data is protected with enterprise-grade security. Generate detailed PDF reports of your holdings and performance, stored securely in the cloud. Export and share your analysis with confidence.
               </p>
               <ul className="space-y-3 text-foreground">
@@ -350,7 +326,7 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary/10 to-accent/10 backdrop-blur-sm">
-        <div ref={ctaSection.ref} className={`max-w-4xl mx-auto text-center fade-in scroll-reveal-scale ${ctaSection.isVisible ? 'visible' : ''}`}>
+        <div className="max-w-4xl mx-auto text-center fade-in">
           <h2 className="text-4xl font-bold text-foreground mb-6 gradient-text">
             Ready to Master Your Investments?
           </h2>

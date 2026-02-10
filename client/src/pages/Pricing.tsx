@@ -82,10 +82,10 @@ export default function Pricing() {
       {/* Header */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center fade-in">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 gradient-text">
+          <h1 className="text-5xl sm:text-6xl font-bold text-foreground mb-6 gradient-text">
             Simple, Transparent Pricing
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 px-4">
+          <p className="text-xl text-muted-foreground mb-8">
             Choose the perfect plan for your investment portfolio analysis needs. All plans include core features with no hidden fees.
           </p>
         </div>
@@ -94,7 +94,7 @@ export default function Pricing() {
       {/* Pricing Cards */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-6">
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-6">
             {pricingTiers.map((tier, index) => (
               <div
                 key={tier.name}
@@ -102,10 +102,10 @@ export default function Pricing() {
                 style={{ animationDelay: `${index * 0.15}s` }}
               >
                 <Card
-                  className={`card-elegant p-6 sm:p-8 h-full flex flex-col relative transition-all duration-300 ease-out ${
+                  className={`card-elegant p-8 h-full flex flex-col relative transition-all duration-300 ${
                     tier.highlighted
-                      ? "ring-2 ring-primary shadow-2xl scale-105 hover:shadow-primary/50 hover:ring-primary/80"
-                      : "hover-lift card-hover hover:-translate-y-2"
+                      ? "ring-2 ring-primary shadow-2xl scale-105"
+                      : "hover-lift"
                   }`}
                 >
                   {tier.highlighted && (
@@ -117,14 +117,14 @@ export default function Pricing() {
                   )}
 
                   <div className="mb-8">
-                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2 gradient-text">
+                    <h3 className="text-2xl font-bold text-foreground mb-2 gradient-text">
                       {tier.name}
                     </h3>
                     <p className="text-muted-foreground text-sm mb-6">
                       {tier.description}
                     </p>
                     <div className="flex items-baseline gap-2 mb-4">
-                      <span className="text-4xl sm:text-5xl font-bold text-foreground">
+                      <span className="text-5xl font-bold text-foreground">
                         {tier.price}
                       </span>
                       <span className="text-muted-foreground">{tier.period}</span>
@@ -132,10 +132,10 @@ export default function Pricing() {
                   </div>
 
                   <Button
-                    className={`w-full mb-8 py-6 text-lg font-semibold transition-all duration-300 ease-out hover:scale-105 active:scale-95 ${
+                    className={`w-full mb-8 py-6 text-lg font-semibold transition-all ${
                       tier.highlighted
-                        ? "bg-primary hover:bg-primary/90 text-white hover:shadow-lg"
-                        : "border-border hover:bg-muted hover:shadow-md"
+                        ? "bg-primary hover:bg-primary/90 text-white"
+                        : "border-border hover:bg-muted"
                     }`}
                     variant={tier.highlighted ? "default" : "outline"}
                   >
@@ -146,7 +146,7 @@ export default function Pricing() {
                     {tier.features.map((feature, featureIndex) => (
                       <div
                         key={feature.name}
-                        className="flex items-start gap-3 fade-in transition-all duration-300 ease-out hover:translate-x-1"
+                        className="flex items-start gap-3 fade-in"
                         style={{ animationDelay: `${0.3 + featureIndex * 0.05}s` }}
                       >
                         {feature.included ? (
